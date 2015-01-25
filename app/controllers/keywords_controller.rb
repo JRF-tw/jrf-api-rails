@@ -15,6 +15,28 @@ class KeywordsController < ApplicationController
   def show
     id = params[:id]
     if id.to_i.to_s == id
+      begin
+        @keyword = Keyword.find(id)
+      rescue
+        @keyword = nil
+      end
+    else
+      begin
+        @keyword = Keyword.where({name: id}).first
+      rescue
+        @keyword = nil
+      end
+    end
+    if @keyword
+      render json: {status: "success", keyword: @keyword}
+    else
+      render json: {status: "failed", error: "not found"}
+    end
+  end
+
+  def records
+    id = params[:id]
+    if id.to_i.to_s == id
       @keyword = Keyword.find(id)
       @records = @keyword.records
       count = @records.length

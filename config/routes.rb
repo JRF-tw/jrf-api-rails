@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   scope '/api' do
     resources :records, only: [:show, :index]
-    resources :keywords, only: [:show, :index]
+    resources :keywords, only: [:show, :index] do
+      member do
+        get 'records'
+      end
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
