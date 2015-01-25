@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  get 'keywords/index'
+
+  get 'keywords/show'
+
+  root 'static_pages#home'
+
+  scope '/api' do
+    resources :records, only: [:show, :index]
+    resources :keywords, only: [:show, :index]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
