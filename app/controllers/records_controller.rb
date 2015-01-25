@@ -2,9 +2,17 @@ class RecordsController < ApplicationController
   def show
     id = params[:id]
     if id.to_i.to_s == id
-      @record = Record.find(id)
+      begin
+        @record = Record.find(id)
+      rescue
+        @record = nil
+      end
     else
-      @record = Record.find({identifier: id})
+      begin
+        @record = Record.where({identifier: id}).first
+      rescue
+        @record = nil
+      end
     end
     if @record
       render json: {status: "success", record: filter_record(@record)}
